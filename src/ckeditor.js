@@ -26,8 +26,9 @@ import List from '@ckeditor/ckeditor5-list/src/list';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import Table from './table/table';
+import TableToolbar from './table/tabletoolbar';
+import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
 
 import '../theme/theme.css';
 
@@ -56,14 +57,19 @@ BalloonEditor.builtinPlugins = [
 	Paragraph,
 	PasteFromOffice,
 	Table,
-	TableToolbar
+	TableToolbar,
+	AnnotateTextPlugin
 ];
 
 // Editor configuration.
 BalloonEditor.defaultConfig = {
 	blockToolbar: [
-		'heading',
+		'annotation:question',
+		'annotation:section',
+		'annotation:answer',
+		'annotation:guideline',
 		'|',
+		'heading',
 		'bulletedList',
 		'numberedList',
 		'imageUpload',
@@ -80,6 +86,21 @@ BalloonEditor.defaultConfig = {
 			'redo'
 		]
 	},
+	annotateTable: {
+		options: [
+			{
+				name: 'Formatting Table',
+				value: 'formatting-table'
+			},
+			{
+				name: 'Question Table',
+				value: 'question-table'
+			}, {
+				name: 'Content-Table',
+				value: 'content-table'
+			}
+		]
+	},
 	image: {
 		toolbar: [
 			'imageStyle:full',
@@ -92,7 +113,9 @@ BalloonEditor.defaultConfig = {
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
-			'mergeTableCells'
+			'mergeTableCells',
+			'splitTable',
+			'annotateTable'
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
