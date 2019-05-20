@@ -8,19 +8,19 @@
 }
 
 .ck-annotated-question, .ck-annotated-question-button:hover {
-  background: #81eaff !important;
+  background: #C5E6FF !important;
 }
 
 .ck-annotated-section, .ck-annotated-section-button:hover {
-  background: #ffcf98 !important;
+  background: #F8F883 !important;
 }
 
 .ck-annotated-guideline, .ck-annotated-guideline-button:hover {
-  background: #c9ffb2 !important;
+  background: #9DFDE1 !important;
 }
 
 .ck-annotated-answer, .ck-annotated-answer-button:hover {
-  background: #f5f5f5 !important;
+  background: #F7CAF5 !important;
 }
 
 .ck-simple-block-view__section {
