@@ -29,10 +29,11 @@ import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefrom
 import Table from './table/table';
 import TableToolbar from './table/tabletoolbar';
 import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 
 import '../theme/theme.css';
 
-export default class BalloonEditor extends BalloonEditorBase {}
+export default class BalloonEditor extends BalloonEditorBase { }
 
 // Plugins to include in the build.
 BalloonEditor.builtinPlugins = [
@@ -58,7 +59,8 @@ BalloonEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
-	AnnotateTextPlugin
+	AnnotateTextPlugin,
+	Underline
 ];
 
 // Editor configuration.
@@ -81,6 +83,7 @@ BalloonEditor.defaultConfig = {
 		items: [
 			'bold',
 			'italic',
+			'underline',
 			'link',
 			'undo',
 			'redo'
