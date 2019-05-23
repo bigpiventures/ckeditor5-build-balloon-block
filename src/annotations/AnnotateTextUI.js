@@ -6,6 +6,7 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import '../../theme/annotation.css';
+import first from '@ckeditor/ckeditor5-utils/src/first';
 
 /**
  * The default annotate UI plugin. It introduces:
@@ -63,7 +64,6 @@ export default class AnnotateTextUI extends Plugin {
 		for (const option of options) {
 			this._addAnnotationButtons(option);
 		}
-		this.value = null;
 	}
 
 	/**
@@ -105,16 +105,9 @@ export default class AnnotateTextUI extends Plugin {
 			buttonView.on('execute', () => {
 				editor.execute('annotateText', { value });
 				editor.editing.view.focus();
-				if (this.value !== value) {
-					this.value = value;
-					buttonView.set({
-						labelStyle: `font-size:12px;background:${color};padding:5px 10px`,
-					});
-				} else {
-					buttonView.set({
-						labelStyle: ''
-					});
-				}
+				buttonView.set({
+					labelStyle: 'lightgray',
+				});
 			});
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 			buttonView.bind('isOn').to(command, 'value', value => value === model);
