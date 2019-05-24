@@ -109,6 +109,10 @@ export default class TableOfContentsPlugin extends Plugin {
 		element.addEventListener('click', () => {
 			// Toggle outline view
 			const display = this.outlineView.style.display;
+			if (display === 'none') {
+				// Refresh view
+				this.rebuildOutline();
+			}
 			this.outlineView.style.display = display === 'block' ? 'none' : 'block';
 		});
 	}
