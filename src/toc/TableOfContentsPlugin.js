@@ -81,6 +81,8 @@ export default class TableOfContentsPlugin extends Plugin {
 		// Debounce
 		this.rebuildOutline = debounce(this.rebuildOutline.bind(this), options.refreshDelay * 1000);
 
+		this.handleOutlineElementClick = this.handleOutlineElementClick.bind(this);
+
 		// Setup listener on editor and debounce changes
 		this.editor.model.document.on( 'change:data', () => {
 		    this.rebuildOutline();
@@ -94,6 +96,7 @@ export default class TableOfContentsPlugin extends Plugin {
 	setupOutlineElement(element) {
 		this.outlineView = element;
 		this.outlineView.style.display = 'none';
+		this.outlineView.innerHTML = '<h3 class="toc-outline-header">Outline</h3>';
 	}
 
 
@@ -113,12 +116,32 @@ export default class TableOfContentsPlugin extends Plugin {
 	rebuildOutline() {
 		const element = this.editor.ui.editor.sourceElement;
 		if (element) {
-			let innerHTML = '';
-			let matches = element.querySelectorAll(this.query);
-			for (let match of matches) {
-				innerHTML += '<h4>' + match.textContent + '</h4>';
+			// Run over children and deregister event listeners if any
+			for (let child of this.outlineView.querySelectorAll('h4')) {
+				child.removeEventListener('click', this.handleOutlineElementClick);
+				child.parentNode.removeChild(child);
 			}
-			this.outlineView.innerHTML = innerHTML;
+			let matches = Array.from(element.querySelectorAll(this.query));
+			this.matches = matches;
+			matches.forEach((match, i) => {
+				let h4Node = document.createElement('h4');
+				h4Node.appendChild(document.createTextNode(match.textContent));
+				h4Node.setAttribute('data-index', i);
+				h4Node.addEventListener('click', this.handleOutlineElementClick);
+				this.outlineView.appendChild(h4Node);
+			});
+		}
+	}
+
+	handleOutlineElementClick(e) {
+		const target = e.target;
+		const index = target.getAttribute('data-index');
+		const match = this.matches[index];
+		if (match && match.scrollIntoView) {
+			match.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
 		}
 	}
 }
