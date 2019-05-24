@@ -6,6 +6,7 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import '../../theme/annotation.css';
+import first from '@ckeditor/ckeditor5-utils/src/first';
 
 /**
  * The default annotate UI plugin. It introduces:
@@ -41,9 +42,9 @@ export default class AnnotateTextUI extends Plugin {
 	get localizedOptionTitles() {
 		const t = this.editor.t;
 		const ret = {};
-		this._ops.forEach( o => {
-			ret[ o.title ] = t( o.title );
-		} );
+		this._ops.forEach(o => {
+			ret[o.title] = t(o.title);
+		});
 		return ret;
 	}
 
@@ -58,10 +59,10 @@ export default class AnnotateTextUI extends Plugin {
    * @inheritDoc
    */
 	init() {
-		const options = this.editor.config.get( 'annotateText.options' );
+		const options = this.editor.config.get('annotateText.options');
 		this._ops = options;
-		for ( const option of options ) {
-			this._addAnnotationButtons( option );
+		for (const option of options) {
+			this._addAnnotationButtons(option);
 		}
 	}
 
@@ -70,11 +71,11 @@ export default class AnnotateTextUI extends Plugin {
    *
    * @private
    */
-	_addAnnotationButtons( option ) {
-		const command = this.editor.commands.get( 'annotateText' );
+	_addAnnotationButtons(option) {
+		const command = this.editor.commands.get('annotateText');
 
 		// TODO: change naming
-		this._addButton( option.model, option.title, option.model, command, option.color );
+		this._addButton(option.model, option.title, option.model, command, option.color);
 	}
 
 	/**
@@ -86,32 +87,29 @@ export default class AnnotateTextUI extends Plugin {
    * @param {String} color   The fill color to use for icon
    * @private
    */
-	_addButton( model, label, value, command, color ) {
+	_addButton(model, label, value, command, color) {
 		const name = 'annotation:' + model;
 		const editor = this.editor;
-		editor.ui.componentFactory.add( name, locale => {
-			const buttonView = new ButtonView( locale );
+		editor.ui.componentFactory.add(name, locale => {
+			const buttonView = new ButtonView(locale);
 
-			const localized = this.localizedOptionTitles[ label ] ? this.localizedOptionTitles[ label ] : label;
+			const localized = this.localizedOptionTitles[label] ? this.localizedOptionTitles[label] : label;
 
 			// Set label and tooltip for the button here
-			buttonView.set( {
-        class: `ck-annotated-${model}-button`,
+			buttonView.set({
+				class: `ck-annotated-${model}-button`,
 				label: localized,
 				tooltip: localized,
-				//labelStyle: `font-size:12px;background:${color};padding:5px 10px`,
 				withText: true
-			} );
-
-			buttonView.on( 'execute', () => {
-				editor.execute( 'annotateText', { value } );
+			});
+			buttonView.on('execute', () => {
+				editor.execute('annotateText', { value });
 				editor.editing.view.focus();
-			} );
-			buttonView.bind( 'isEnabled' ).to( command, 'isEnabled' );
-			buttonView.bind( 'isOn' ).to( command, 'value', value => value === model );
-			buttonView.fillColor = color || 'lightgray';
+			});
+			buttonView.bind('isEnabled').to(command, 'isEnabled');
+			buttonView.bind('isOn').to(command, 'value', value => value === model);
 
 			return buttonView;
-		} );
+		});
 	}
 }

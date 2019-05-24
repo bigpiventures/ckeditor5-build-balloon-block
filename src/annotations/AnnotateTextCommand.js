@@ -3,6 +3,7 @@
  *
  */
 import Command from '@ckeditor/ckeditor5-core/src/command';
+import first from '@ckeditor/ckeditor5-utils/src/first';
 
 /**
  *
@@ -25,7 +26,6 @@ export default class AnnotateTextCommand extends Command {
 	refresh() {
 		const model = this.editor.model;
 		const doc = model.document;
-
 		/**
      * A value indicating whether the command is active. If the selection has some annotation attribute,
      * it corresponds to the value of that attribute.
@@ -33,7 +33,7 @@ export default class AnnotateTextCommand extends Command {
      * @observable
      * @readonly
      */
-		this.value = doc.selection.getAttribute( 'annotation' );
+		this.value = this._getValue();
 		this.isEnabled = true;
 	}
 
@@ -46,31 +46,55 @@ export default class AnnotateTextCommand extends Command {
    *
    * @fires execute
    */
-	execute( options = {} ) {
+	execute(options = {}) {
 		const model = this.editor.model;
 		const document = model.document;
 		const selection = document.selection;
 
 		const annotation = options.value;
 
-		model.change( writer => {
-			const sbs = options.elements ? options.elements : Array.from( selection.getSelectedBlocks() );
-			const range = writer.createRange( writer.createPositionBefore( sbs[ 0 ] ),
-				writer.createPositionAfter( sbs[ sbs.length - 1 ] ) );
+		model.change(writer => {
+			const sbs = options.elements ? options.elements : Array.from(selection.getSelectedBlocks());
+			const range = writer.createRange(writer.createPositionBefore(sbs[0]),
+				writer.createPositionAfter(sbs[sbs.length - 1]));
 			// Select everything until first and last block of selection
-			writer.setSelection( writer.createSelection( range ) );
-			const ranges = model.schema.getValidRanges( selection.getRanges(), 'annotation' );
-			for ( const range of ranges ) {
-				if ( annotation !== undefined ) {
-					if ( ( annotation === this.value || annotation === null ) && !options.disableRemove ) {
-						writer.removeAttribute( 'annotation', range );
+			writer.setSelection(writer.createSelection(range));
+			const ranges = model.schema.getValidRanges(selection.getRanges(), 'annotation');
+			for (const range of ranges) {
+				if (annotation !== undefined) {
+					if ((annotation === this.value || annotation === null) && !options.disableRemove) {
+						writer.removeAttribute('annotation', range);
 					} else {
-						writer.setAttribute( 'annotation', annotation, range );
+						writer.setAttribute('annotation', annotation, range);
 					}
 				} else {
-					writer.removeAttribute( 'annotation', range );
+					writer.removeAttribute('annotation', range);
 				}
 			}
-		} );
+		});
+	}
+
+	/**
+	 * Checks the command's {@link #value}.
+	 *
+	 * @private
+	 * @returns {Boolean} The current value.
+	 */
+	_getValue() {
+		const blocks = Array.from(this.editor.model.document.selection.getSelectedBlocks());
+		if (!blocks.length) {
+			return;
+		}
+		let annotation = undefined;
+		for (let block of blocks) {
+			const blockAnnotation = block.getAttribute('annotation');
+			if (blockAnnotation !== annotation && annotation) {
+				return undefined;
+			}
+			if (!annotation) {
+				annotation = blockAnnotation;
+			}
+		}
+		return annotation;
 	}
 }
