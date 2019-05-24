@@ -118,23 +118,20 @@ export default class TableOfContentsPlugin extends Plugin {
 	}
 
 	rebuildOutline() {
-		const element = this.editor.ui.editor.sourceElement;
-		if (element) {
-			// Run over children and deregister event listeners if any
-			for (let child of this.outlineView.querySelectorAll('h4')) {
-				child.removeEventListener('click', this.handleOutlineElementClick);
-				child.parentNode.removeChild(child);
-			}
-			let matches = Array.from(element.querySelectorAll(this.query));
-			this.matches = matches;
-			matches.forEach((match, i) => {
-				let h4Node = document.createElement('h4');
-				h4Node.appendChild(document.createTextNode(match.textContent));
-				h4Node.setAttribute('data-index', i);
-				h4Node.addEventListener('click', this.handleOutlineElementClick);
-				this.outlineView.appendChild(h4Node);
-			});
+		// Run over children and deregister event listeners if any
+		for (let child of this.outlineView.querySelectorAll('h4')) {
+			child.removeEventListener('click', this.handleOutlineElementClick);
+			child.parentNode.removeChild(child);
 		}
+		let matches = Array.from(document.querySelectorAll(this.query));
+		this.matches = matches;
+		matches.forEach((match, i) => {
+			let h4Node = document.createElement('h4');
+			h4Node.appendChild(document.createTextNode(match.textContent));
+			h4Node.setAttribute('data-index', i);
+			h4Node.addEventListener('click', this.handleOutlineElementClick);
+			this.outlineView.appendChild(h4Node);
+		});
 	}
 
 	handleOutlineElementClick(e) {
