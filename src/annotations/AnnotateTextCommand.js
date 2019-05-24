@@ -33,7 +33,7 @@ export default class AnnotateTextCommand extends Command {
      * @observable
      * @readonly
      */
-		this._getValue();
+		this.value = this._getValue();
 		this.isEnabled = true;
 	}
 
@@ -81,7 +81,20 @@ export default class AnnotateTextCommand extends Command {
 	 * @returns {Boolean} The current value.
 	 */
 	_getValue() {
-		const firstBlock = first(this.editor.model.document.selection.getSelectedBlocks());
-		this.value = firstBlock._attrs.get('annotation');
+		const blocks = Array.from(this.editor.model.document.selection.getSelectedBlocks());
+		if (!blocks.length) {
+			return;
+		}
+		let annotation = undefined;
+		for (let block of blocks) {
+			const blockAnnotation = block.getAttribute('annotation');
+			if (blockAnnotation !== annotation && annotation) {
+				return undefined;
+			}
+			if (!annotation) {
+				annotation = blockAnnotation;
+			}
+		}
+		return annotation;
 	}
 }

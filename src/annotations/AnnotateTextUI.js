@@ -105,13 +105,9 @@ export default class AnnotateTextUI extends Plugin {
 			buttonView.on('execute', () => {
 				editor.execute('annotateText', { value });
 				editor.editing.view.focus();
-				buttonView.set({
-					labelStyle: 'lightgray',
-				});
 			});
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 			buttonView.bind('isOn').to(command, 'value', value => value === model);
-			buttonView.fillColor = color || 'lightgray';
 
 			return buttonView;
 		});
