@@ -7,19 +7,19 @@
   padding: 0px;
 }
 
-.ck-annotated-question, .ck-annotated-question-button:hover {
+.ck-annotated-question, .ck-annotated-question-button:hover, .ck-annotated-question-button.ck-on {
   background: #C5E6FF !important;
 }
 
-.ck-annotated-section, .ck-annotated-section-button:hover {
+.ck-annotated-section, .ck-annotated-section-button:hover, .ck-annotated-section-button.ck-on {
   background: #F8F883 !important;
 }
 
-.ck-annotated-guideline, .ck-annotated-guideline-button:hover {
+.ck-annotated-guideline, .ck-annotated-guideline-button:hover, .ck-annotated-guideline-button.ck-on {
   background: #9DFDE1 !important;
 }
 
-.ck-annotated-answer, .ck-annotated-answer-button:hover {
+.ck-annotated-answer, .ck-annotated-answer-button:hover, .ck-annotated-answer-button.ck-on {
   background: #F7CAF5 !important;
 }
 
