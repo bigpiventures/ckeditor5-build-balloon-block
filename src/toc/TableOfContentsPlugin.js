@@ -79,7 +79,7 @@ export default class TableOfContentsPlugin extends Plugin {
 		this.setupEventListeners(options.trigger);
 
 		// Debounce
-		this.rebuildOutline = debounce(this.rebuildOutline.bind(this), options.refreshDelay * 1000);
+		this.rebuildOutline = debounce(this._rebuildOutline.bind(this), options.refreshDelay * 1000);
 
 		this.handleOutlineElementClick = this.handleOutlineElementClick.bind(this);
 
@@ -111,13 +111,13 @@ export default class TableOfContentsPlugin extends Plugin {
 			const display = this.outlineView.style.display;
 			if (display === 'none') {
 				// Refresh view
-				this.rebuildOutline();
+				this._rebuildOutline();
 			}
 			this.outlineView.style.display = display === 'block' ? 'none' : 'block';
 		});
 	}
 
-	rebuildOutline() {
+	_rebuildOutline() {
 		// Run over children and deregister event listeners if any
 		for (let child of this.outlineView.querySelectorAll('h4')) {
 			child.removeEventListener('click', this.handleOutlineElementClick);
@@ -126,6 +126,10 @@ export default class TableOfContentsPlugin extends Plugin {
 		let matches = Array.from(document.querySelectorAll(this.query));
 		this.matches = matches;
 		matches.forEach((match, i) => {
+			// Hide hidden nodes in hi-fi view if applicable
+			if (match.offsetParent === null) {
+				return;
+			}
 			let h4Node = document.createElement('h4');
 			h4Node.appendChild(document.createTextNode(match.textContent));
 			h4Node.setAttribute('data-index', i);
