@@ -8,12 +8,25 @@
 			max-width: 800px;
 			margin: 20px auto;
 		}
+
+		#outline {
+			display: block;
+		    position: fixed;
+		    left: 25px;
+		    width: 300px;
+		    white-space: pre-line;
+		    background: #fffefeec;
+		    border: 1px solid gray;
+		    padding: 15px;
+		}
 	</style>
 </head>
 <body>
 
 <h1>CKEditor 5 – balloon block editor build – development sample</h1>
 
+<button id='trigger'>Outline</button>
+<pre id='outline'></pre>
 <div id="editor">
 	<h2>Sample</h2>
 

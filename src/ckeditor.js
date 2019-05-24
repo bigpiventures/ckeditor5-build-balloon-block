@@ -28,6 +28,7 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Table from './table/table';
 import TableToolbar from './table/tabletoolbar';
+import TableOfContentsPlugin from './toc/TableOfContentsPlugin';
 import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 
@@ -60,6 +61,7 @@ BalloonEditor.builtinPlugins = [
 	Table,
 	TableToolbar,
 	AnnotateTextPlugin,
+	TableOfContentsPlugin,
 	Underline
 ];
 
@@ -79,6 +81,12 @@ BalloonEditor.defaultConfig = {
 		'insertTable',
 		'mediaEmbed'
 	],
+	tableOfContents: {
+		refreshDelay: 2,
+		query: '.ck-annotated-section',
+        trigger: '#trigger',
+        target: '#outline'
+    },
 	toolbar: {
 		items: [
 			'bold',
