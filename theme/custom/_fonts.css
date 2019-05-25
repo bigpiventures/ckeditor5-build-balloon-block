@@ -6,4 +6,6 @@
 :root {
 	--ck-font-face: 'work-sans-regular', Helvetica, Arial, Tahoma, Verdana, Sans-Serif;
 	--ck-focus-outer-shadow-geometry: 0px !important;
+	--ck-color-focus-border: 0px !important;
+	--ck-color-shadow-inner: 0px !important;
 }
