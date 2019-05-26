@@ -77,14 +77,14 @@ BalloonEditor.defaultConfig = {
 		'annotation:answer',
 		'|',
 		'annotation:guideline',
-		// '|',
-		// 'heading',
-		// 'bulletedList',
-		// 'numberedList',
-		// 'imageUpload',
-		// 'blockQuote',
-		// 'insertTable',
-		// 'mediaEmbed'
+		'|',
+		'heading',
+		'bulletedList',
+		'numberedList',
+		'imageUpload',
+		'blockQuote',
+		'insertTable',
+		'mediaEmbed'
 	],
 	tableOfContents: {
 		refreshDelay: 2,
@@ -102,21 +102,6 @@ BalloonEditor.defaultConfig = {
 			'redo'
 		]
 	},
-	annotateTable: {
-		options: [
-			{
-				name: 'Formatting Table',
-				value: 'formatting-table'
-			},
-			{
-				name: 'Question Table',
-				value: 'question-table'
-			}, {
-				name: 'Content-Table',
-				value: 'content-table'
-			}
-		]
-	},
 	image: {
 		toolbar: [
 			'imageStyle:full',
@@ -131,7 +116,12 @@ BalloonEditor.defaultConfig = {
 			'tableRow',
 			'mergeTableCells',
 			'splitTable',
-			'annotateTable'
+			
+		],
+		tableToolbar: [ 
+			'annotateTable.question-table',
+			'annotateTable.content-table',
+			'annotateTable.formatting-table'
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.

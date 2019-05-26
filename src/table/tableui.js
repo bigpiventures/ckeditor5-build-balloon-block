@@ -11,6 +11,8 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 import Model from '@ckeditor/ckeditor5-ui/src/model';
 import Collection from '@ckeditor/ckeditor5-utils/src/collection';
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+import ToolbarSeparatorView from '@ckeditor/ckeditor5-ui/src/toolbar/toolbarseparatorview';
 
 import InsertTableView from './ui/inserttableview';
 
@@ -18,9 +20,19 @@ import tableIcon from '../../theme/icons/table.svg';
 import tableColumnIcon from '../../theme/icons/table-column.svg';
 import tableRowIcon from '../../theme/icons/table-row.svg';
 import tableMergeCellIcon from '../../theme/icons/table-merge-cell.svg';
-import annotateTableIcon from '../../theme/icons/annotate.svg';
+// import annotateTableIcon from '../../theme/icons/annotate.svg';
 import splitTableIcon from '../../theme/icons/split-table.svg';
-
+const annotateTableOptions = {
+	'question-table': {
+		label: 'Mark as Q&A'
+	},
+	'content-table': {
+		label: 'Mark as Content'
+	},
+	'formatting-table': {
+		label: 'Ignore Table'
+	}
+}
 /**
  * The table UI plugin. It introduces:
  *
@@ -220,19 +232,10 @@ export default class TableUI extends Plugin {
 		} );
 
 		// Annotation for tables
-		editor.ui.componentFactory.add( 'annotateTable', locale => {
-			const options = editor.config.get( 'annotateTable.options' );
-			return this._prepareDropdown( t( 'Annotate' ), annotateTableIcon, options.map( o => {
-				return {
-					type: 'button',
-					model: {
-						commandName: 'annotateTable',
-						commandValue: o.value,
-						label: t( o.name )
-					}
-				};
-			} ), locale );
-		} );
+		const _options = this.editor.config.get('table.tableToolbar');
+		for(const _opt of _options) {
+			this._addButton(_opt);
+		}
 	}
 
 	/**
@@ -280,6 +283,42 @@ export default class TableUI extends Plugin {
 		} );
 
 		return dropdownView;
+	}
+
+	/**
+	 * Internal method for creating annotation buttons.
+	 *
+	 * @param {String} model The model of the button.
+	 * @param {String} label The label for the button.
+	 * @param {Object} command The annotate text command
+	 * @param {String} color   The fill color to use for icon
+	 * @private
+	 */
+	_addButton(name) {
+		const _value = name.split('.')[1];
+		const label = annotateTableOptions[_value] ? annotateTableOptions[_value].label : _value;
+		const editor = this.editor;
+		editor.ui.componentFactory.add(name, locale => {
+			const buttonView = new ButtonView(locale);
+			const command = this.editor.commands.get('annotateTable');
+
+			const localized = editor.t(label);
+
+			// Set label and tooltip for the button here
+			buttonView.set({
+				class: `ck-table-annotate-${_value}-button`,
+				label: localized,
+				withText: true
+			});
+			buttonView.on('execute', () => {
+				editor.execute('annotateTable', { value: _value });
+				editor.editing.view.focus();
+			});
+			buttonView.bind('isEnabled').to(command, 'isEnabled');
+			buttonView.bind('isOn').to(command, 'value', value => value === _value);
+
+			return buttonView;
+		});
 	}
 }
 
