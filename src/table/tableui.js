@@ -234,7 +234,9 @@ export default class TableUI extends Plugin {
 		// Annotation for tables
 		const _options = this.editor.config.get('table.tableToolbar');
 		for(const _opt of _options) {
-			this._addButton(_opt);
+			if(_opt !== '|'){
+				this._addButton(_opt);
+			}
 		}
 	}
 

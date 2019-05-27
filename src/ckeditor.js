@@ -138,14 +138,20 @@ BalloonEditor.defaultConfig = {
 	table: {
 		contentToolbar: [
 			'splitTable',
+			'|',
 			'tableRow',
+			'|',
 			'tableColumn',
+			'|',
 			'mergeTableCells',
+			'|',
 			'tablealignment'
 		],
 		tableToolbar: [
 			'annotateTable.question-table',
+			'|',
 			'annotateTable.content-table',
+			'|',
 			'annotateTable.formatting-table'
 		]
 	},

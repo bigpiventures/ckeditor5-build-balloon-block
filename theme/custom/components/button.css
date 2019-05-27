@@ -1,6 +1,6 @@
 .ck-toolbar > .ck-button {
     font-size: 12px !important;
-    min-height: auto !important;
+    min-height: 30px !important;
     margin: 0px !important;
     padding: 3px 5px !important;
 }
