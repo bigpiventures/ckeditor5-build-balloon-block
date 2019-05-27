@@ -345,6 +345,8 @@ function addListOption( option, editor, commands, itemDefinitions ) {
 		if ( bindIsOn ) {
 			model.bind( 'isOn' ).to( command, 'value' );
 		}
+	} else {
+		
 	}
 
 	model.set( {

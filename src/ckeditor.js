@@ -32,6 +32,7 @@ import TableOfContentsPlugin from './toc/TableOfContentsPlugin';
 import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import TableAlignment from './table/alignment/tablealignment';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 
 import '../theme/custom/globals.css';
 import '../theme/theme.css';
@@ -66,7 +67,8 @@ BalloonEditor.builtinPlugins = [
 	TableAlignment,
 	AnnotateTextPlugin,
 	TableOfContentsPlugin,
-	Underline
+	Underline,
+	Alignment
 ];
 
 // Editor configuration.
@@ -93,15 +95,31 @@ BalloonEditor.defaultConfig = {
 		query: '.ck-annotated-section',
         trigger: '#trigger',
         target: '#outline'
-    },
+	},
+	alignment: {
+		options: [ 'left', 'right', 'center', 'justify' ]
+	},
 	toolbar: {
 		items: [
 			'bold',
+			'|',
 			'italic',
+			'|',
 			'underline',
+			'|',
 			'link',
+			'|',
 			'undo',
-			'redo'
+			'|',
+			'redo',
+			'|',
+			'bulletedList',
+			'|',
+			'numberedList',
+			'|',
+			'insertTable',
+			'|',
+			'alignment'
 		]
 	},
 	image: {
@@ -112,18 +130,20 @@ BalloonEditor.defaultConfig = {
 			'imageTextAlternative'
 		]
 	},
-	tablealignment: [
-		'left', 'right', 'center', 'justify'
-	],
+	tablealignment: {
+		'options': [
+			'left', 'right', 'center', 'justify'
+		]
+	},
 	table: {
 		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells',
 			'splitTable',
+			'tableRow',
+			'tableColumn',
+			'mergeTableCells',
 			'tablealignment'
 		],
-		tableToolbar: [ 
+		tableToolbar: [
 			'annotateTable.question-table',
 			'annotateTable.content-table',
 			'annotateTable.formatting-table'

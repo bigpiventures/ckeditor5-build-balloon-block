@@ -3,10 +3,6 @@
   font-size: 16px;
 }
 
-.ck.ck-button.ck-off.ck-button_with-text {
-  padding: 0px;
-}
-
 .ck-annotated-question, .ck-annotated-question-button:hover, .ck-annotated-question-button.ck-on {
   background: #C5E6FF !important;
 }
