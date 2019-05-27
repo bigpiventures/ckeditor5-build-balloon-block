@@ -31,6 +31,7 @@ import TableToolbar from './table/tabletoolbar';
 import TableOfContentsPlugin from './toc/TableOfContentsPlugin';
 import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import TableAlignment from './table/alignment/tablealignment';
 
 import '../theme/custom/globals.css';
 import '../theme/theme.css';
@@ -62,6 +63,7 @@ BalloonEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
+	TableAlignment,
 	AnnotateTextPlugin,
 	TableOfContentsPlugin,
 	Underline
@@ -110,13 +112,16 @@ BalloonEditor.defaultConfig = {
 			'imageTextAlternative'
 		]
 	},
+	tablealignment: [
+		'left', 'right', 'center', 'justify'
+	],
 	table: {
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
 			'mergeTableCells',
 			'splitTable',
-			
+			'tablealignment'
 		],
 		tableToolbar: [ 
 			'annotateTable.question-table',
