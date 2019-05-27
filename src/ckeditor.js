@@ -9,7 +9,7 @@ import BalloonEditorBase from '@ckeditor/ckeditor5-editor-balloon/src/balloonedi
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import BlockToolbar from '@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar';
+import BlockToolbar from './block/blocktoolbar'; // v11.2.0
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
@@ -31,8 +31,12 @@ import TableToolbar from './table/tabletoolbar';
 import TableOfContentsPlugin from './toc/TableOfContentsPlugin';
 import AnnotateTextPlugin from './annotations/AnnotateTextPlugin';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import TableAlignment from './table/alignment/tablealignment';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 
+import '../theme/custom/globals.css';
 import '../theme/theme.css';
+import '../theme/custom/components/index.css';
 
 export default class BalloonEditor extends BalloonEditorBase { }
 
@@ -60,17 +64,22 @@ BalloonEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
+	TableAlignment,
 	AnnotateTextPlugin,
 	TableOfContentsPlugin,
-	Underline
+	Underline,
+	Alignment
 ];
 
 // Editor configuration.
 BalloonEditor.defaultConfig = {
 	blockToolbar: [
 		'annotation:question',
+		'|',
 		'annotation:section',
+		'|',
 		'annotation:answer',
+		'|',
 		'annotation:guideline',
 		'|',
 		'heading',
@@ -86,30 +95,31 @@ BalloonEditor.defaultConfig = {
 		query: '.ck-annotated-section',
         trigger: '#trigger',
         target: '#outline'
-    },
+	},
+	alignment: {
+		options: [ 'left', 'right', 'center', 'justify' ]
+	},
 	toolbar: {
 		items: [
 			'bold',
+			'|',
 			'italic',
+			'|',
 			'underline',
+			'|',
 			'link',
+			'|',
 			'undo',
-			'redo'
-		]
-	},
-	annotateTable: {
-		options: [
-			{
-				name: 'Formatting Table',
-				value: 'formatting-table'
-			},
-			{
-				name: 'Question Table',
-				value: 'question-table'
-			}, {
-				name: 'Content-Table',
-				value: 'content-table'
-			}
+			'|',
+			'redo',
+			'|',
+			'bulletedList',
+			'|',
+			'numberedList',
+			'|',
+			'insertTable',
+			'|',
+			'alignment'
 		]
 	},
 	image: {
@@ -120,13 +130,29 @@ BalloonEditor.defaultConfig = {
 			'imageTextAlternative'
 		]
 	},
+	tablealignment: {
+		'options': [
+			'left', 'right', 'center', 'justify'
+		]
+	},
 	table: {
 		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells',
 			'splitTable',
-			'annotateTable'
+			'|',
+			'tableRow',
+			'|',
+			'tableColumn',
+			'|',
+			'mergeTableCells',
+			'|',
+			'tablealignment'
+		],
+		tableToolbar: [
+			'annotateTable.question-table',
+			'|',
+			'annotateTable.content-table',
+			'|',
+			'annotateTable.formatting-table'
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.

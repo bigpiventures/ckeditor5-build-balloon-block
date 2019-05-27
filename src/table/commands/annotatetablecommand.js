@@ -36,12 +36,10 @@ export default class AnnotateTableCommand extends Command {
    */
 	refresh() {
 		const selection = this.editor.model.document.selection;
-
-		const tableParent = findAncestor( 'table', selection.getFirstPosition() );
-
-		this.isEnabled = !!tableParent;
-		if ( tableParent ) {
-			this.tableType = tableParent.getAttribute( 'tableType' );
+		const element = selection && selection.getSelectedElement() ? selection.getSelectedElement() : {};
+		this.isEnabled = element.name === 'table' ? true : false;
+		if(element.name === 'table') {
+			this.value = element.getAttribute( 'tableType' );
 		}
 	}
 
@@ -57,11 +55,7 @@ export default class AnnotateTableCommand extends Command {
 		const editor = this.editor;
 		const model = editor.model;
 		const selection = editor.model.document.selection;
-
-		const firstPosition = selection.getFirstPosition();
-
-		const tableCell = findAncestor( 'tableCell', firstPosition );
-		const table = tableCell.parent.parent;
+		const table = selection.getSelectedElement();
 		if ( !table ) {
 			return;
 		}

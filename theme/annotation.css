@@ -3,10 +3,6 @@
   font-size: 16px;
 }
 
-.ck.ck-button.ck-off.ck-button_with-text {
-  padding: 0px;
-}
-
 .ck-annotated-question, .ck-annotated-question-button:hover, .ck-annotated-question-button.ck-on {
   background: #C5E6FF !important;
 }
@@ -59,40 +55,26 @@
 }
 
 .ck-annotated-table--question-table {
-  background: rgba(255, 165, 0, 0.7);
+  border: solid 5px rgba(255, 165, 0, 0.7) !important;
 }
 
 .ck-annotated-table--formatting-table {
-  background: #ffffff;
+  border: #ffffff !important;
+  background: #ffffff !important;
 }
 
-.ck-annotated-table--formatting-table table {
-  background: none;
-  border: 1px solid #ececec !important;
+.ck-annotated-table--content-table {
+  border: solid 5px #d5fdf9 !important;
 }
 
-.ck-annotated-table--formatting-table thead {
-  background: none;
-  border: 1px solid #ececec !important;
+.ck-table-annotate-question-table-button:hover, .ck-table-annotate-question-table-button.ck-on {
+  background: #FDAD81 !important;
 }
 
-.ck-annotated-table--formatting-table th, .ck-annotated-table--formatting-table td {
-  background: none;
-  border: 1px solid #ececec !important;
+.ck-table-annotate-content-table-button:hover, .ck-table-annotate-content-table-button.ck-on {
+  background: #d5fdf9 !important;
 }
 
-.ck-annotated-table--content-table table {
-  background: rgba(224, 224, 224, 0.6);
-  border-style: dotted !important;
-  border-width: 1px !important;
-}
-
-.ck-annotated-table--content-table thead {
-  border-style: dotted !important;
-}
-
-
-
-.ck-annotated-table--content-table td {
-  border-style: dotted !important;
+.ck-table-annotate-formatting-table-button:hover, .ck-table-annotate-formatting-table-button.ck-on {
+  background: #ffffff !important;
 }

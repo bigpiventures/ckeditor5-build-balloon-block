@@ -1,0 +1,11 @@
+.ck-toolbar > .ck-button {
+    font-size: 12px !important;
+    min-height: 30px !important;
+    margin: 0px !important;
+    padding: 3px 5px !important;
+}
+
+.ck-button:focus {
+    border: 0px;
+}
+  
