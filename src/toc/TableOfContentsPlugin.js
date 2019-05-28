@@ -97,6 +97,7 @@ export default class TableOfContentsPlugin extends Plugin {
 		this.outlineView = element;
 		this.outlineView.style.display = 'none';
 		this.outlineView.innerHTML = '<div class="toc-outline-header">Outline <i class="zmdi zmdi-close"/></div>';
+		this.handleCloseOutline();
 	}
 
 
@@ -115,6 +116,14 @@ export default class TableOfContentsPlugin extends Plugin {
 			}
 			this.outlineView.style.display = display === 'block' ? 'none' : 'block';
 		});
+	}
+
+	/**
+	 * Handle clicking on close button for outline content
+	 */
+	handleCloseOutline() {
+		let zmdiClose = document.querySelector('.zmdi-close');
+		setupEventListeners(zmdiClose);
 	}
 
 	_rebuildOutline() {
