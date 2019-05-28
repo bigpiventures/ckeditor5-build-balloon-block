@@ -88,22 +88,24 @@ export default class SetHeaderColumnCommand extends Command {
 		const headingColumnsToSet = currentHeadingColumns > selectionColumn ? selectionColumn : selectionColumn + 1;
 		model.change( writer => {
 			updateNumericAttribute( 'headingColumns', headingColumnsToSet, table, writer, 0 );
-			// Mark every cell as question under the given header
-			for ( const { cell, column } of new TableWalker( table, { includeSpanned: true } ) ) {
-				if ( this._isInHeading( cell, table ) ) {
-					// Select the contents of this cell
-					this.editor.commands.get( 'annotateText' ).execute( {
-						value: cellAnnotatedValue,
-						disableRemove: true,
-						elements: Array.from( cell.getChildren() )
-					} );
-				} else if ( column === selectionColumn ) {
-					this.editor.commands.get( 'annotateText' ).execute( {
-						value: cellAnnotatedValue,
-						elements: Array.from( cell.getChildren() )
-					} );
+			setTimeout(() => {
+				// Mark every cell as question under the given header
+				for ( const { cell, column } of new TableWalker( table, { includeSpanned: true } ) ) {
+					if ( this._isInHeading( cell, table ) ) {
+						// Select the contents of this cell
+						this.editor.commands.get( 'annotateText' ).execute( {
+							value: cellAnnotatedValue,
+							disableRemove: true,
+							elements: Array.from( cell.getChildren() )
+						} );
+					} else if ( column === selectionColumn ) {
+						this.editor.commands.get( 'annotateText' ).execute( {
+							value: cellAnnotatedValue,
+							elements: Array.from( cell.getChildren() )
+						} );
+					}
 				}
-			}
+			}, 0);
 			// Reset selection to original
 			writer.setSelection( writer.createSelection( writer.createRangeOn( tableCell ) ) );
 		} );
