@@ -74,12 +74,8 @@ export default class SetHeaderColumnCommand extends Command {
 		const tableRow = tableCell.parent;
 		const table = tableRow.parent;
 		const tableType = table.getAttribute( 'tableType' );
-		let cellAnnotatedValue = undefined;
-		if ( tableType === 'question-table' ) {
-			cellAnnotatedValue = 'question';
-		} else if ( cellAnnotatedValue === 'content-table' ) {
-			cellAnnotatedValue = 'answer';
-		} else {
+		let cellAnnotatedValue = 'question';
+		if ( tableType !== 'question-table' && tableType !== 'content-table' ) {
 			cellAnnotatedValue = null;
 		}
 		const currentHeadingColumns = parseInt( table.getAttribute( 'headingColumns' ) || 0 );
@@ -88,21 +84,26 @@ export default class SetHeaderColumnCommand extends Command {
 		const headingColumnsToSet = currentHeadingColumns > selectionColumn ? selectionColumn : selectionColumn + 1;
 		model.change( writer => {
 			updateNumericAttribute( 'headingColumns', headingColumnsToSet, table, writer, 0 );
-			for ( const { cell, column } of new TableWalker( table, { includeSpanned: true } ) ) {
-				if ( this._isInHeading( cell, table ) ) {
-					// Select the contents of this cell
-					this.editor.commands.get( 'annotateText' ).execute( {
-						value: cellAnnotatedValue,
-						disableRemove: true,
-						elements: Array.from( cell.getChildren() )
-					} );
-				} else if ( column === selectionColumn ) {
-					this.editor.commands.get( 'annotateText' ).execute( {
-						value: cellAnnotatedValue,
-						elements: Array.from( cell.getChildren() )
-					} );
+			setTimeout(() => {
+				for ( const { cell, column } of new TableWalker( table, { includeSpanned: true } ) ) {
+					if (!cell || !cellAnnotatedValue) {
+						continue;
+					}
+					if ( this._isInHeading( cell, table ) ) {
+						// Select the contents of this cell
+						this.editor.commands.get( 'annotateText' ).execute( {
+							value: cellAnnotatedValue,
+							disableRemove: true,
+							elements: Array.from( cell.getChildren() )
+						} );
+					} else if ( column === selectionColumn ) {
+						this.editor.commands.get( 'annotateText' ).execute( {
+							value: cellAnnotatedValue,
+							elements: Array.from( cell.getChildren() )
+						} );
+					}
 				}
-			}
+			}, 0);
 			// Reset selection to original
 			writer.setSelection( writer.createSelection( writer.createRangeOn( tableCell ) ) );
 		} );
