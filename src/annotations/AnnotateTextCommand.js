@@ -55,21 +55,12 @@ export default class AnnotateTextCommand extends Command {
 
 		model.change(writer => {
 			const sbs = options.elements ? options.elements : Array.from(selection.getSelectedBlocks());
-			if (!options.elements) {
-				const range = writer.createRange(writer.createPositionBefore(sbs[0]),
+			const range = writer.createRange(writer.createPositionBefore(sbs[0]),
 				writer.createPositionAfter(sbs[sbs.length - 1]));
-				// Select everything until first and last block of selection
-				writer.setSelection(writer.createSelection(range));
-			}
-			let ranges;
-			if (options.elements) {
-				// ranges depend on elements now
-				ranges = sbs.map((s) => writer.createRangeOn(s));
-				// Filter to those that support this attribute
-				ranges = model.schema.getValidRanges(ranges, 'annotation');
-			} else {
-				ranges = model.schema.getValidRanges(selection.getRanges(), 'annotation');
-			}
+			// Select everything until first and last block of selection
+			writer.setSelection(writer.createSelection(range));
+
+			const ranges = model.schema.getValidRanges(selection.getRanges(), 'annotation');
 			for (const range of ranges) {
 				if (annotation !== undefined) {
 					if ((annotation === this.value || annotation === null) && !options.disableRemove) {
