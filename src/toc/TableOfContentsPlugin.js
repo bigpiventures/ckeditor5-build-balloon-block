@@ -96,7 +96,7 @@ export default class TableOfContentsPlugin extends Plugin {
 	setupOutlineElement(element) {
 		this.outlineView = element;
 		this.outlineView.style.display = 'none';
-		this.outlineView.innerHTML = '<h3 class="toc-outline-header">Outline</h3>';
+		this.outlineView.innerHTML = '<div class="toc-outline-header">Outline <i className="zmdi zmdi-close"/></div>';
 	}
 
 
