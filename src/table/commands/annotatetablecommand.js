@@ -70,18 +70,6 @@ export default class AnnotateTableCommand extends Command {
 		model.change( writer => {
 			// We will destroy the table an re-create so that secondary view updates
 			writer.setAttribute( 'tableType', tableType, table );
-			// for ( const { cell } of new TableWalker( table, { includeSpanned: true } ) ) {
-			// 	editor.commands.get( 'annotateText' ).execute( {
-			// 		value: null,
-			// 		elements: Array.from( cell.getChildren() )
-			// 	} );
-			// }
-			const range = writer.createRangeOn( table );
-			writer.remove( range );
-			writer.removeAttribute( 'headingRows', table );
-			writer.removeAttribute( 'headingColumns', table );
-			writer.insert( table, range.start );
-			writer.setSelection( writer.createSelection( range, 'end' ) );
 		} );
 	}
 

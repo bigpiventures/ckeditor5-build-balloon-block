@@ -138,6 +138,10 @@ export default class TableEditing extends Plugin {
 					return;
 				}
 				const viewWriter = conversionApi.writer;
+				viewWriter.removeClass('ck-annotated-table', viewElement );
+				if (data.attributeOldValue) {
+					viewWriter.removeClass( 'ck-annotated-table--' + data.attributeOldValue, viewElement );
+				}
 				viewWriter.addClass( 'ck-annotated-table', viewElement );
 				viewWriter.addClass( 'ck-annotated-table--' + data.attributeNewValue, viewElement );
 			} );
