@@ -48,6 +48,7 @@
 .ck-annotated-table td, .ck-annotated-table th {
   border-color: #212121 !important;
   background: transparent !important;
+  min-width: 0 !important;
 }
 
 .ck-annotated-table thead, .ck-annotated-table tbody {
