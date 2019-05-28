@@ -61,6 +61,16 @@ export default class AnnotateTextEditing extends Plugin {
 
 		editor.conversion.attributeToAttribute( _buildDefinition(options) );
 		editor.commands.add( 'annotateText', new AnnotateTextCommand( editor ) );
+
+		options.forEach((option, i) => {
+			// https://stackoverflow.com/questions/49714473/modifying-capturing-key-press-with-ckeditor5
+			this.editor.keystrokes.set( `Ctrl+${i + 1}`, ( data, stop ) => {
+				editor.execute('annotateText', {
+					value: option.model
+				});
+				stop(); // Works like data.preventDefault() + evt.stop()
+	  	} );
+		});
 	}
 }
 
