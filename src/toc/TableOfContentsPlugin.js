@@ -123,7 +123,7 @@ export default class TableOfContentsPlugin extends Plugin {
 	 */
 	handleCloseOutline() {
 		let zmdiClose = document.querySelector('.zmdi-close');
-		setupEventListeners(zmdiClose);
+		this.setupEventListeners(zmdiClose);
 	}
 
 	_rebuildOutline() {
