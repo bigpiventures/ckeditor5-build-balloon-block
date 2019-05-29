@@ -60,7 +60,7 @@
 }
 
 .ck-annotated-table--formatting-table {
-  border: #ffffff !important;
+  border: solid 5px #DDDDDD !important;
   background: #ffffff !important;
 }
 
@@ -77,5 +77,5 @@
 }
 
 .ck-table-annotate-formatting-table-button:hover, .ck-table-annotate-formatting-table-button.ck-on {
-  background: #ffffff !important;
+  background: #DDDDDD !important;
 }
